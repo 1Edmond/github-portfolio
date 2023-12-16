@@ -510,55 +510,32 @@
 
         <script>
             var language; 
-            //var file = 'https://raw.githubusercontent.com/1Edmond/github-portfolio/main/assets/js/app-head.js'; 
-            var file = 'assets/lang/' +  localStorage.getItem('language') + '.json'; 
+            var file = 'en.json'; 
+           // var file = 'assets/lang/' +  localStorage.getItem('language') + '.json'; 
             function getLanguage() {
             (localStorage.getItem('language') == null) ? setLanguage('en') : false;
-            alert(localStorage.getItem('language'))
-            alert(file)
-
-            $.ajax({ 
-                url: file,
-                type: 'GET',
-                headers: {
-                'Access-Control-Allow-Origin': '*',
-                "Access-Control-Allow-Origin": "*",
-		        "Access-Control-Allow-Credentials": "true",
-		        "Access-Control-Max-Age": "1800",
-		        "Access-Control-Allow-Headers": "content-type",
-		        "Access-Control-Allow-Methods":"PUT, POST, GET, DELETE, PATCH, OPTIONS",
-                },
-                dataType: 'jsonp',
+            var lang = localStorage.getItem('language');
+            if(lang != "en")
+            {
+                file = "fr.json"
+                $.ajax({ 
+                    url: "https://raw.githubusercontent.com/1Edmond/github-portfolio/master/assets/lang/" + file,
+                    dataType: 'json',
                 async: false, 
-                success: function (lang) { language = lang; alert("Er") },
+                success: function (lang) { language = lang; alert(language.ed) },
                 error : function(er, ex) { 
-                    alert(er.statusText)
-                    alert(ex)
                 }
             });
-            }
-
-           
-            function fetchJSONFile(path, callback) {
-    var httpRequest = new XMLHttpRequest();
-    httpRequest.onreadystatechange = function() {
-        if (httpRequest.readyState === 4) {
-            if (httpRequest.status === 200) {
-                var data = JSON.parse(httpRequest.responseText);
-                if (callback) callback(data);
-            }
         }
-    };
-    httpRequest.open('GET', path);
-    httpRequest.send();
-}
+    }
 
+        
 
-function setLanguage(lang) {
-    localStorage.setItem('language', lang);
-    //  getLanguage();
-    fetchJSONFile(file,console.log)
-            }
+        function setLanguage(lang) {
+            localStorage.setItem('language', lang);
+            getLanguage();
+            
+        }
         </script>
 
     </body>
